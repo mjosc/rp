@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -22,8 +21,6 @@ func Register(*app.Config) fx.Option {
 func setup(lc fx.Lifecycle, handlers handlers.Handlers) {
 	mux := http.NewServeMux()
 	mux.Handle("/", handlers.Goodbye)
-
-	fmt.Println("hello, goodbye")
 
 	server := &http.Server{
 		Addr:    ":8200",
