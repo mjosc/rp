@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -18,11 +17,13 @@ func NewReverseProxy(dst string) (shared.ReverseProxy, error) {
 	}
 	inner := &httputil.ReverseProxy{
 		Director: func(r *http.Request) {
+			// We've mapped the first directory of each incoming path to a third-party service. This directory
+			// must be removed before proxying the request to each service.
+			path := utils.RemoveDirFromPath(r.URL.Path, 0)
+
 			r.URL.Scheme = target.Scheme
 			r.URL.Host = target.Host
-			r.URL.Path = utils.RemoveDirFromPath(r.URL.Path, 0)
-
-			fmt.Println(r.URL)
+			r.URL.Path = path
 		},
 	}
 	return &reverseProxy{

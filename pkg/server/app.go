@@ -22,6 +22,7 @@ func setup(lc fx.Lifecycle, handlers handlers.Handlers) {
 
 	mux := http.NewServeMux()
 	mux.Handle("/hello/", handlers.HelloProxy)
+	mux.Handle("/goodbye/", handlers.GoodbyeProxy)
 
 	server := &http.Server{
 		Addr:    ":8080",
