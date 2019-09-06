@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
 	config := &app.Config{
 		ProxyServicePort:        8000,
 		HelloServicePort:        8100,
@@ -23,5 +22,6 @@ func main() {
 		handlers.Register,
 		mocks.Register,
 	)
+
 	app.Run()
 }
