@@ -26,6 +26,7 @@ func setup(lc fx.Lifecycle, handlers handlers.Handlers) {
 	mux := http.NewServeMux()
 	mux.Handle("/server", handlers.InternalServerError)
 	mux.Handle("/request", handlers.BadRequestError)
+	mux.Handle("/modify_response", handlers.ModifyResponseError)
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%v", configuration.BadServicePort),

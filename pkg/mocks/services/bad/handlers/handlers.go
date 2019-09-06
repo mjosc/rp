@@ -9,4 +9,5 @@ type Handlers struct {
 	fx.In
 	InternalServerError shared.InternalServerError
 	BadRequestError     shared.BadRequestError
+	ModifyResponseError shared.ModifyResponseError
 }

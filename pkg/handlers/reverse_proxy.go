@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -25,9 +26,18 @@ func NewReverseProxy(dst string) (shared.ReverseProxy, error) {
 			r.URL.Host = target.Host
 			r.URL.Path = path
 		},
+		ModifyResponse: func(res *http.Response) error {
+			header := res.Header.Get(shared.HeaderModifyResponseError)
+			if len(header) > 0 {
+				return fmt.Errorf("ReverseProxy.ModifyResponse received %v header: %v", shared.HeaderModifyResponseError, header)
+			}
+			return nil
+		},
 		ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
 			w.WriteHeader(500)
-			w.Write([]byte("ReverseProxy.ErrorHandler Test"))
+
+			body := fmt.Sprintf("Internal Server Error: [ source: ReverseProxy.ErrorHandler, error: %v ]", err)
+			w.Write([]byte(body))
 		},
 	}
 	return &reverseProxy{

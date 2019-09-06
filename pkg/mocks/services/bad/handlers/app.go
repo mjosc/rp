@@ -10,6 +10,7 @@ func Register(*app.Config) fx.Option {
 		fx.Provide(
 			NewInternalServerError,
 			NewBadRequestError,
+			NewModifyResponseError,
 		),
 	)
 }
