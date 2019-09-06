@@ -10,6 +10,8 @@ import (
 
 var configuration *app.Config
 
+// Register registers any FX options required in this package. It must be provided to app.New in order
+// to be used in the application.
 func Register(config *app.Config) fx.Option {
 	configuration = config
 	return fx.Options(
