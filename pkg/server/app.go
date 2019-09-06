@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -10,7 +11,10 @@ import (
 	"go.uber.org/fx"
 )
 
-func Register(*app.Config) fx.Option {
+var configuration *app.Config
+
+func Register(config *app.Config) fx.Option {
+	configuration = config
 	return fx.Options(
 		fx.Invoke(
 			setup,
@@ -23,9 +27,11 @@ func setup(lc fx.Lifecycle, handlers handlers.Handlers) {
 	mux := http.NewServeMux()
 	mux.Handle("/hello/", handlers.HelloProxy)
 	mux.Handle("/goodbye/", handlers.GoodbyeProxy)
+	mux.Handle("/bad/", handlers.BadProxy)
+	mux.Handle("/no_connection", handlers.NoConnectionProxy)
 
 	server := &http.Server{
-		Addr:    ":8080",
+		Addr:    fmt.Sprintf(":%v", configuration.ProxyServicePort),
 		Handler: mux,
 	}
 

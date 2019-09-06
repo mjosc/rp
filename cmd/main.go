@@ -8,7 +8,17 @@ import (
 )
 
 func main() {
-	app := app.New(nil,
+
+	config := &app.Config{
+		ProxyServicePort:        8000,
+		HelloServicePort:        8100,
+		GoodbyeServicePort:      8200,
+		BadServicePort:          8300,
+		NoConnectionServicePort: 8400,
+	}
+
+	app := app.New(
+		config,
 		server.Register,
 		handlers.Register,
 		mocks.Register,

@@ -7,6 +7,8 @@ import (
 
 type Handlers struct {
 	fx.In
-	HelloProxy   shared.HelloProxy
-	GoodbyeProxy shared.GoodbyeProxy
+	HelloProxy        shared.HelloProxy
+	GoodbyeProxy      shared.GoodbyeProxy
+	BadProxy          shared.BadProxy
+	NoConnectionProxy shared.NoConnectionProxy
 }

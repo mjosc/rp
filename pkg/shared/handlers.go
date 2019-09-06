@@ -13,3 +13,11 @@ type HelloProxy interface {
 type GoodbyeProxy interface {
 	ReverseProxy
 }
+
+type BadProxy interface {
+	ReverseProxy
+}
+
+type NoConnectionProxy interface {
+	ReverseProxy
+}

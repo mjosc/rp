@@ -25,6 +25,10 @@ func NewReverseProxy(dst string) (shared.ReverseProxy, error) {
 			r.URL.Host = target.Host
 			r.URL.Path = path
 		},
+		ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
+			w.WriteHeader(500)
+			w.Write([]byte("ReverseProxy.ErrorHandler Test"))
+		},
 	}
 	return &reverseProxy{
 		Inner: inner,

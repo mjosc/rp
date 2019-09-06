@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -10,7 +11,10 @@ import (
 	"go.uber.org/fx"
 )
 
-func Register(*app.Config) fx.Option {
+var configuration *app.Config
+
+func Register(config *app.Config) fx.Option {
+	configuration = config
 	return fx.Options(
 		fx.Invoke(
 			setup,
@@ -23,7 +27,7 @@ func setup(lc fx.Lifecycle, handlers handlers.Handlers) {
 	mux.Handle("/", handlers.Hello)
 
 	server := &http.Server{
-		Addr:    ":8100",
+		Addr:    fmt.Sprintf(":%v", configuration.HelloServicePort),
 		Handler: mux,
 	}
 

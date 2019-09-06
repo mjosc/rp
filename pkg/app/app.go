@@ -7,6 +7,11 @@ import (
 // Config is used to pass any environment variables and/or other values to each package via an
 // FXRegistrationFunc.
 type Config struct {
+	ProxyServicePort        int
+	HelloServicePort        int
+	GoodbyeServicePort      int
+	BadServicePort          int
+	NoConnectionServicePort int
 }
 
 // FXRegistrationFunc is the function signature of any function used to register dependencies or other
